@@ -67,3 +67,26 @@ workspace/apache-artemis-2.32.0/bin/artemis consumer --verbose --destination que
 ```
 workspace/apache-artemis-2.32.0/bin/artemis check queue --name TEST --produce 10 --browse 10 --consume 10 --url "tcp://${BROKER_EXT_ACCEPTOR_HOST}:443?sslEnabled=true&verifyHost=false&trustStorePath=workspace/server-ca-truststore.jks&trustStorePassword=securepass&useTopologyForLoadBalancing=false"
 ```
+
+## Notes
+Checking the database - Find the pod running PostgresQL in the default namespace/project. From the Admin perspective Workloads -> Pods -> Terminal tab.
+...
+# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c '\dt'
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | bindings       | table | postgres
+ public | large_messages | table | postgres
+ public | messages       | table | postgres
+ public | page_store     | table | postgres
+(4 rows)
+...
+...
+# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select count(*) from messages'
+ count 
+-------
+    56
+(1 row)
+...
+# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select * from messages'
+...
