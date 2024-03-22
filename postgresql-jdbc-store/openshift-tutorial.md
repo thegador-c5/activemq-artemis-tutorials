@@ -71,7 +71,8 @@ workspace/apache-artemis-2.32.0/bin/artemis check queue --name TEST --produce 10
 ## Notes
 Checking the database - Find the pod running PostgresQL in the default namespace/project. From the Admin perspective Workloads -> Pods -> Terminal tab.
 ...
-# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c '\dt'
+PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c '\dt'
+...
              List of relations
  Schema |      Name      | Type  |  Owner   
 --------+----------------+-------+----------
@@ -80,13 +81,14 @@ Checking the database - Find the pod running PostgresQL in the default namespace
  public | messages       | table | postgres
  public | page_store     | table | postgres
 (4 rows)
+
 ...
+PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select count(*) from messages'
 ...
-# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select count(*) from messages'
  count 
 -------
     56
 (1 row)
 ...
-# PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select * from messages'
+PGPASSWORD=postgres psql -h localhost -p 5432 --username postgres -c 'select * from messages'
 ...
