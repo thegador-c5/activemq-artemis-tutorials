@@ -85,3 +85,60 @@ workspace/apache-artemis-2.32.0/bin/artemis consumer --verbose --destination que
 ```
 workspace/apache-artemis-2.32.0/bin/artemis check queue --name TEST --produce 10 --browse 10 --consume 10 --url "tcp://${BROKER_EXT_ACCEPTOR_HOST}:443?sslEnabled=true&verifyHost=false&trustStorePath=workspace/server-ca-truststore.jks&trustStorePassword=securepass&useTopologyForLoadBalancing=false"
 ```
+
+## Resources
+https://activemq.apache.org/components/artemis/documentation/latest/persistence.html#jdbc-persistence 
+https://access.redhat.com/documentation/en-us/red_hat_amq_broker/7.11/html/configuring_amq_broker/assembly-br-persisting-message-data_configuring 
+https://www.postgresql.org/docs/current/app-psql.html 
+https://github.com/artemiscloud/activemq-artemis-operator/tree/1.1.0 
+
+## Notes
+dbruscin
+  9 days ago
+postgresql should be in the default namespace and the broker pod in the postgresql-jdbc-store.
+
+
+dbruscin
+  9 days ago
+your ActiveMQArtemis CRD is not updated, indeed it doesn't include the new required field spec.resourceTemplates.patch (edited) 
+
+
+dbruscin
+  9 days ago
+the tutorial requires the ActivemQArtemis CRD included in the upstream version 1.1.0
+https://github.com/artemiscloud/activemq-artemis-operator/blob/1.1.0/deploy/crds/broker_activemqartemis_crd.yaml (edited) 
+
+
+dbruscin
+  9 days ago
+I updated the ActiveMQArtemis CRD in your OpenShift cluster, now it is working as expected (edited) 
+
+
+thegador
+  9 days ago
+Thank you!
+
+
+thegador
+  9 days ago
+Is there any mapping between supported AMQ Broker versions and Operator versions that I can refer to?
+
+
+dbruscin
+  9 days ago
+AMQ Broker Operator 7.12 will be based on upstream ArtemisCloud Operator 1.1.0
+
+
+thegador
+  9 days ago
+Ok. Thank you!
+
+
+thegador
+  8 days ago
+Hello Domenico, is it okay to share this tutorial with a customer who is starting a proof of concept?
+
+
+dbruscin
+  8 days ago
+Hi Thomas, we can share it with a customer but we need to clarify that it is a POC and the official doc for AMQ Broker Operator 7.12 could suggest a different supported way to deploy a broker pod with JDBC storage because other improvements could be included in 7.12
